@@ -3,7 +3,6 @@ import { EventEmitter } from 'events';
 import { TooltipProps } from 'react-native-walkthrough-tooltip';
 
 const WAIT_NO_MORE_TIMEOUT = 1000 * 60 * 10; // 10 minutes
-const HOT_SEC = 500;
 
 type OutcomeType = { event: string | symbol; action: (...args: any[]) => void };
 
@@ -33,7 +32,9 @@ export type ContextValue = {
 };
 export const WalkthroughContext = React.createContext<ContextValue>({
   currentElement: nullElement,
-  goToNext: () => {},
+  goToNext: () => {
+    return;
+  },
 });
 
 interface Props {
@@ -118,14 +119,10 @@ class ContextWrapper extends Component<Props, State> {
 
   setElement = (element: ElementType) => {
     if (element.id !== this.state.currentElement.id) {
-      // clear previous element
-      this.setElementNull();
+      // clear previous element listeners/timeouts
       this.clearCurrentPossibleOutcomes();
 
-      // after a hot sec, set current element
-      setTimeout(() => {
-        this.setState(safeSetElement(element));
-      }, HOT_SEC);
+      this.setState(safeSetElement(element));
     }
   };
 
