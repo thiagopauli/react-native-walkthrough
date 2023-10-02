@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/indent */
+
 import React, { FunctionComponent, ReactNode, ReactElement } from 'react';
 import Tooltip, { TooltipChildrenContext, TooltipProps } from 'react-native-walkthrough-tooltip';
 
